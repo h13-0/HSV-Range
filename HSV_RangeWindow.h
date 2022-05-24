@@ -87,13 +87,20 @@ namespace HSV_Range
 
 		std::string GetPhotoPath(void)
 		{
-			return getLineEditTextMethod(this->ui.PhotoPath);
+			return getLineEditText(this->ui.PhotoPath);
 		};
+
+		void SetPhotoPath(std::string Path)
+		{
+			SetLineEditText(this->ui.PhotoPath, Path);
+		}
 
 		std::string GetVideoPath(void)
 		{
-			return getLineEditTextMethod(this->ui.VideoPath);
+			return getLineEditText(this->ui.VideoPath);
 		};
+
+		std::string GetPhotoPathByDialog(void);
 
 	private:
 		void addPreviewModeChangedCallbackFunction(PreviewModeChangedCallback_t& Callback, std::vector<PreviewModeChangedCallback_t>& TargetCallbacks);
@@ -104,6 +111,8 @@ namespace HSV_Range
 		void executeSliderChangedCallback(const std::vector<SliderChangedCallback_t>& Callbacks, unsigned int CurrentValue);
 		void executeButtonClickedCallback(const std::vector<ButtonClickedCallback_t>& Callbacks);
 
+		std::string getLineEditText(QLineEdit* LineEdit);
+		
 		Ui::HSV_RangeClass ui;
 
 		/// <summary>
@@ -141,7 +150,7 @@ namespace HSV_Range
 
 	private slots:
 		void refreshImageMethod(cv::Mat Image);
-		std::string getLineEditTextMethod(QLineEdit* LineEdit);
+		void setLineEditTextMethod(QLineEdit* LineEdit, std::string Text);
 
 		void rgbPreviewRadioButtonChanged(bool Status)
 		{
@@ -217,7 +226,7 @@ namespace HSV_Range
 		
 	signals:
 		void RefreshImage(cv::Mat Image);
-		std::string GetLineEditText(QLineEdit* LineEdit);
+		void SetLineEditText(QLineEdit* LineEdit, std::string Text);
 		void SetOpenVideoButtonText(std::string Text);
 	};
 }

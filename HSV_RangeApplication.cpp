@@ -11,10 +11,18 @@
 
 h13::HSV_RangeApplication::HSV_RangeApplication(HSV_Range::HSV_RangeWindow& Window) : window(Window)
 {
+	using namespace std;
 	using namespace HSV_Range;
 	filter = HSV_Filter(0, 255, 0, 255, 0, 255);
 
-	PreviewModeChangedCallback_t previewModeChangeCallback = [this](PreviewMode_t Mode) { mode = Mode; };
+	PreviewModeChangedCallback_t previewModeChangeCallback = 
+		[this](PreviewMode_t Mode)
+	{ 
+		mode = Mode;
+		unique_lock<mutex> lck(refreshHSV_ConditionMutex);
+		refreshHSV_ConditionFlag = true;
+		refreshHSV_Condition.notify_all();
+	};
 	window.AddPreviewModeChangedCalback(previewModeChangeCallback);
 
 	SliderChangedCallback_t hMaxChangedCallback = [this](unsigned int Value) { hueMaximumChangedMethod(Value); };
@@ -187,6 +195,12 @@ void h13::HSV_RangeApplication::openPhotoButtonClickedMethod(void)
 	using namespace cv;
 	stopRefreshVideo();
 	string fileName = window.GetPhotoPath();
+	if (fileName.size() == 0)
+	{
+		fileName = window.GetPhotoPathByDialog();
+		window.SetPhotoPath(fileName);
+	}
+	
 	try {
 		unique_lock<mutex> lck(refreshHSV_ConditionMutex);
 		frame = imread(fileName);

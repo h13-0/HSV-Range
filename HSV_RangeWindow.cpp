@@ -1,5 +1,7 @@
 #include "HSV_RangeWindow.h"
 #include "QString.h"
+#include "QFileDialog"
+#include "QMessageBox"
 
 HSV_Range::HSV_RangeWindow::HSV_RangeWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -65,9 +67,9 @@ HSV_Range::HSV_RangeWindow::HSV_RangeWindow(QWidget *parent)
 
 	//Connecting signal slots.
 	connect(this, &HSV_RangeWindow::RefreshImage, this, &HSV_RangeWindow::refreshImageMethod, Qt::BlockingQueuedConnection);
-	connect(this, &HSV_RangeWindow::GetLineEditText, this, &HSV_RangeWindow::getLineEditTextMethod);
+	connect(this, &HSV_RangeWindow::SetLineEditText, this, &HSV_RangeWindow::setLineEditTextMethod);
 	connect(this, &HSV_RangeWindow::SetOpenVideoButtonText, this, [this](std::string Text) {this->ui.OpenVideoButton->setText(QString::fromStdString(Text)); });
-
+	
 	connect(this->ui.RGB_Preview, &QRadioButton::toggled, this, &HSV_RangeWindow::rgbPreviewRadioButtonChanged);
 	connect(this->ui.HSV_Preview, &QRadioButton::toggled, this, &HSV_RangeWindow::hsvPreviewRadioButtonChanged);
 	connect(this->ui.H_MaxSlider, &QSlider::valueChanged, this, &HSV_RangeWindow::hueMaximumSliderChanged);
@@ -95,6 +97,19 @@ void HSV_Range::HSV_RangeWindow::refreshImageMethod(cv::Mat Image)
 	ui.graphicsView->setScene(&scene);
 	ui.graphicsView->fitInView(ui.graphicsView->scene()->sceneRect(), Qt::KeepAspectRatio);
 	ui.graphicsView->show();
+}
+
+std::string HSV_Range::HSV_RangeWindow::GetPhotoPathByDialog(void)
+{
+	QString fileName = QFileDialog::getOpenFileName(
+		this,
+		tr("Select a photo."),
+		"./",
+		tr("images(*.png *jpeg *jpg *ico *bmp);;All files(*.*)"));
+	if (fileName.isEmpty()) {
+		QMessageBox::warning(this, "Warning!", "No photos selected!");
+	}
+	return fileName.toStdString();
 }
 
 void HSV_Range::HSV_RangeWindow::addPreviewModeChangedCallbackFunction(PreviewModeChangedCallback_t& Callback, std::vector<PreviewModeChangedCallback_t>& TargetCallbacks)
@@ -136,7 +151,7 @@ void HSV_Range::HSV_RangeWindow::executeButtonClickedCallback(const std::vector<
 	}
 }
 
-std::string HSV_Range::HSV_RangeWindow::getLineEditTextMethod(QLineEdit* LineEdit)
+std::string HSV_Range::HSV_RangeWindow::getLineEditText(QLineEdit* LineEdit)
 {
 	using namespace std;
 	try {
@@ -145,5 +160,17 @@ std::string HSV_Range::HSV_RangeWindow::getLineEditTextMethod(QLineEdit* LineEdi
 	catch (...)
 	{
 		return "";
+	}
+}
+
+void HSV_Range::HSV_RangeWindow::setLineEditTextMethod(QLineEdit* LineEdit, std::string Text)
+{
+	using namespace std;
+	try {
+		LineEdit->setText(QString::fromStdString(Text));
+	}
+	catch (...)
+	{
+		return;
 	}
 }
