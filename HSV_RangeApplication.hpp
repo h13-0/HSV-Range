@@ -46,7 +46,7 @@ namespace h13
 		HSV_Filter filter;
 		HSV_Range::HSV_RangeWindow &window;
 
-		
+		std::string lastPicturePath;
 		
 		
 		/// <summary>

@@ -174,3 +174,7 @@ void HSV_Range::HSV_RangeWindow::setLineEditTextMethod(QLineEdit* LineEdit, std:
 		return;
 	}
 }
+
+void HSV_Range::HSV_RangeWindow::makeMessageBoxMethod(std::string title, std::string text)
+{
+}

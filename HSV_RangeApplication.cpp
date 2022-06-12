@@ -200,19 +200,28 @@ void h13::HSV_RangeApplication::openPhotoButtonClickedMethod(void)
 		fileName = window.GetPhotoPathByDialog();
 		window.SetPhotoPath(fileName);
 	}
-	
-	try {
-		unique_lock<mutex> lck(refreshHSV_ConditionMutex);
-		frame = imread(fileName);
-		if (!frame.empty())
-		{
-			refreshHSV_ConditionFlag = true;
-			refreshHSV_Condition.notify_all();
-		}
-	}
-	catch (...)
+	else if (lastPicturePath == fileName)
 	{
-		
+		fileName = window.GetPhotoPathByDialog();
+		window.SetPhotoPath(fileName);
+	}
+	lastPicturePath = fileName;
+	
+	if (fileName.size() != 0)
+	{
+		try {
+			unique_lock<mutex> lck(refreshHSV_ConditionMutex);
+			frame = imread(fileName);
+			if (!frame.empty())
+			{
+				refreshHSV_ConditionFlag = true;
+				refreshHSV_Condition.notify_all();
+			}
+		}
+		catch (...)
+		{
+
+		}
 	}
 }
 

@@ -151,6 +151,7 @@ namespace HSV_Range
 	private slots:
 		void refreshImageMethod(cv::Mat Image);
 		void setLineEditTextMethod(QLineEdit* LineEdit, std::string Text);
+		void makeMessageBoxMethod(std::string title, std::string text);
 
 		void rgbPreviewRadioButtonChanged(bool Status)
 		{
@@ -228,5 +229,6 @@ namespace HSV_Range
 		void RefreshImage(cv::Mat Image);
 		void SetLineEditText(QLineEdit* LineEdit, std::string Text);
 		void SetOpenVideoButtonText(std::string Text);
+		//void makeMessageBox();
 	};
 }
