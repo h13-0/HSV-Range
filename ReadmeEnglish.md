@@ -1,5 +1,5 @@
 # HSV Threshold Editor
-[Chinese](./Readme.md)
+[Chinese](./Readme.md)  
 HSV threshold is usually used for color block recognition in opencv, etc.  
 The color space of this threshold editor is `HSV_FULL` instead of `HSV`.  
 # Usage
