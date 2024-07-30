@@ -6,7 +6,7 @@ The color space of this threshold editor is `HSV_FULL` instead of `HSV`.
 Download release version. (x86 version is not available at present, please compile by yourself.)  
 [Release](https://github.com/h13-0/HSV-Range/releases)
 ## Open picture
-`Open picture` button is `打开图片`, parameter is the path of the picture file.  
+`Open picture` button is `打开图片`, parameter is the path of the picture file. <font color="red">The file path cannot contain non English characters.</font>  
 When using, you can manually enter a path in the text box on the left of the `打开图片` button and click the button to open the picture.  
 You can also click the button to manually select file opening with the UI dialog box of the file manager **after clearing the text box** or **when the content of the text box is the last open path**. ~~You can find out how to use it by yourself.~~  
 ![Photo1.jpg](./Images/Photo1.jpg)

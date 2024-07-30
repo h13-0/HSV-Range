@@ -90,7 +90,7 @@ void HSV_Range::HSV_RangeWindow::refreshImageMethod(cv::Mat Image)
 
 	cvtColor(Image, Image, COLOR_BGR2RGB);
 
-	QImage disImage = QImage((const unsigned char*)(Image.data), Image.cols, Image.rows, QImage::Format_RGB888);
+	QImage disImage = QImage((const unsigned char*)(Image.data), Image.cols, Image.rows, Image.step, QImage::Format_RGB888);
 	scene.clear();
 	QGraphicsPixmapItem *pointer = scene.addPixmap(QPixmap::fromImage(disImage));
 

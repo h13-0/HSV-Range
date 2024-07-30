@@ -7,7 +7,7 @@ HSV阈值通常用于OpenCV中的色块识别等。
 下载Release版本(暂不提供x86版)  
 [Release](https://github.com/h13-0/HSV-Range/releases)
 ## 打开图片
-参数为文件路径。  
+参数为文件路径, <font color="red">文件路径不可包非英文字符</font>。  
 使用时可以在`打开图片`按钮左侧的文本框手动输入路径后单击按钮打开图片, 也可以**在清空文本框后**或**文本框内容为上次打开路径时**单击按钮用文件管理器的UI对话框手动选择文件打开。~~自己摸索一下就知道怎么用了。~~  
 ![Photo1.jpg](./Images/Photo1.jpg)
 ### HSV预览
